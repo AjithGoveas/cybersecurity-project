@@ -1,0 +1,32 @@
+# Conda environment (prefix-based, local)
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Model cache (large binary files)
+models/*.joblib
+models/*.pkl
+models/*.onnx
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Env vars
+.env
+.env.local

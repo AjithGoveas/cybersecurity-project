@@ -1,0 +1,19 @@
+name: qrshield
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - streamlit>=1.30
+  - opencv>=4.8
+  - pyzbar>=0.1.9
+  - beautifulsoup4>=4.12
+  - tldextract>=5.1
+  - dnspython>=2.4
+  - requests>=2.31
+  - scikit-learn>=1.3
+  - joblib>=1.3
+  - pillow>=10.0
+  - pip
+  - pip:
+    - huggingface-hub>=0.20
