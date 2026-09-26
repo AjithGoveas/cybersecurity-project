@@ -9,7 +9,7 @@ MODELS_DIR.mkdir(exist_ok=True)
 SAMPLES_DIR.mkdir(parents=True, exist_ok=True)
 
 HUGGINGFACE_MODEL_ID = "pirocheto/phishing-url-detection"
-HUGGINGFACE_MODEL_FILE = "sklearn_model.joblib"
+HUGGINGFACE_MODEL_FILE = "model.pkl"
 LOCAL_MODEL_PATH = MODELS_DIR / "phishing_model.joblib"
 
 URL_LENGTH_SUSPICIOUS = 75

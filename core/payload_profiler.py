@@ -17,27 +17,48 @@ class PayloadProfile:
 
 
 def _parse_wifi_payload(payload: str) -> dict:
-    """Parse WIFI: QR payload."""
+    """Parse WIFI: QR payload.
+
+    Supports both standard WIFI:S:name;T:WPA;P:pass; format
+    and WIFI:SSID=name;T=WPA;PASSWORD=pass; format.
+    """
     data = {}
     s = payload[len("WIFI:"):].rstrip(";")
 
-    for part in re.split(r";(?=(?:SSID|SECURITY|PASSWORD|HIDDEN|T|P|S|H|I)})", s):
-        if "=" in part:
-            key, _, val = part.partition("=")
-            key = key.strip().upper()
-            val = val.strip().strip('"')
-            if key in ("S", "SSID"):
-                data["ssid"] = val
-            elif key in ("P", "PASSWORD"):
-                data["password"] = val
-            elif key in ("T", "SECURITY"):
-                data["security"] = val
-            elif key in ("H", "HIDDEN"):
-                data["hidden"] = val.lower() == "true"
-            elif key == "I":
-                data["identity"] = val
+    if "=" in s and ":" not in s.split(";")[0]:
+        for part in s.split(";"):
+            if "=" in part:
+                key, _, val = part.partition("=")
+                key = key.strip().upper()
+                val = val.strip().strip('"')
+                _assign_wifi_field(data, key, val)
+    else:
+        for part in s.split(";"):
+            if ":" in part:
+                key, _, val = part.partition(":")
+                key = key.strip().upper()
+                val = val.strip().strip('"')
+                _assign_wifi_field(data, key, val)
+            elif "=" in part:
+                key, _, val = part.partition("=")
+                key = key.strip().upper()
+                val = val.strip().strip('"')
+                _assign_wifi_field(data, key, val)
 
     return data
+
+
+def _assign_wifi_field(data: dict, key: str, val: str) -> None:
+    if key in ("S", "SSID"):
+        data["ssid"] = val
+    elif key in ("P", "PASSWORD", "PWD"):
+        data["password"] = val
+    elif key in ("T", "SECURITY"):
+        data["security"] = val
+    elif key in ("H", "HIDDEN"):
+        data["hidden"] = val.lower() == "true"
+    elif key in ("I", "IDENTITY", "E", "ANONYMOUS_IDENTITY"):
+        data["identity"] = val
 
 
 def _parse_sms_payload(payload: str) -> dict:

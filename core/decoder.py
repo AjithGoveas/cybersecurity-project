@@ -44,9 +44,9 @@ def _detect_payload_type(payload: str) -> str:
         return "VCALENDAR"
     if upper.startswith("MECARD:"):
         return "MECARD"
-    if upper.startswith("http://") or upper.startswith("https://"):
+    if upper.startswith("HTTP://") or upper.startswith("HTTPS://"):
         return "URL"
-    if upper.startswith("mailto:"):
+    if upper.startswith("MAILTO:"):
         return "EMAIL"
     return "TEXT"
 

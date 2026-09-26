@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import logging
+import warnings
 from dataclasses import dataclass
 
 import joblib
 
 from config import HUGGINGFACE_MODEL_ID, HUGGINGFACE_MODEL_FILE, LOCAL_MODEL_PATH
+
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 
 logger = logging.getLogger(__name__)
 
